@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<nav class="navbar navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand">Welcome {{username}}</a>
+    <a class="nav-item" style="color: black;text-decoration: none" href="/userorders/">My Orders</a>
+    <a href="/userlogout/" class="btn btn-danger">Logout</a> 
+  </div>
+</nav>
+{% for message in messages  %}
+<p style="color: green;text-align: center">{{message}}</p>
+{% endfor %}
+<form method="post" action="/placeorder/">
+{% csrf_token %}
+<div class="container" style="margin: auto;width: 600px">
+   <table style="width: 100%">
+      <tr>
+        <th>pizza</th>
+        <th>price</th>
+        <th>quantity</th>
+      </tr>
+      {% for pizza in pizzas %}
+      <tr>
+        <td>{{pizza.name}}</td>
+        <td>{{pizza.price}}</td>
+        <td><input type="number" min="0" value="0" name="{{pizza.id}}" style="width: 50px" name="quantity"></td>
+      </tr>
+      {% endfor %}
+   </table>
+   <input type="text" placeholder="address" style="width: 400px;margin-top: 100px" name="address">
+   <input type="submit" style="float: right;margin-top: 100px" class="btn-outline-success" value="place order" name="">
+
+</div>   
+</form>
+{% endblock content %}
